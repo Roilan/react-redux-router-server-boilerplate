@@ -6,14 +6,21 @@ import { createStore } from 'redux';
 import reducers from './app/modules';
 import App from './app';
 import template from './template';
+import isMobile from './utils/is-mobile';
+import { isMobileAction } from './app/modules/device';
 
 const server = express();
 
 server.use('/assets', express.static('assets'));
 
 server.get('/', (req, res) => {
+  const isUAMobile = isMobile(req.headers['user-agent']);
+  const store = createStore(reducers);
+
+  store.dispatch(isMobileAction(isUAMobile));
+
   const appString = renderToString(
-    <Provider store={createStore(reducers)}>
+    <Provider store={store}>
       <App />
     </Provider>
   );
@@ -21,7 +28,7 @@ server.get('/', (req, res) => {
   res.send(template({
     body: appString,
     title: 'Hello World from the server',
-    initialState: JSON.stringify({})
+    initialState: JSON.stringify(store.getState())
   }));
 });
 

@@ -16,7 +16,7 @@ function reducer(state = INITIAL_STATE, action) {
   }
 }
 
-export function IS_MOBILE(isMobile) {
+export function isMobileAction(isMobile) {
   return {
     payload: isMobile,
     type: SET_DEVICE
