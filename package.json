@@ -7,7 +7,7 @@
     "start": "cd dist && node server",
     "build": "webpack",
     "watch": "webpack --watch",
-    "dev": "nodemon dist/server.js",
+    "dev": "cd dist && nodemon server.js",
     "lint": "functionhappy | snazzy"
   },
   "repository": {
